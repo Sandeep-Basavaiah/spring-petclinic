@@ -144,15 +144,15 @@ resource "aws_eks_cluster" "main" {
 #   depends_on = [aws_eks_cluster.main]
 # }
 
-resource "aws_iam_openid_connect_provider" "main" {
-  client_id_list  = ["sts.amazonaws.com"]
-  thumbprint_list = [data.external.thumbprint.result.thumbprint]
-  url             = data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer
+# resource "aws_iam_openid_connect_provider" "main" {
+#   client_id_list  = ["sts.amazonaws.com"]
+#   thumbprint_list = [data.external.thumbprint.result.thumbprint]
+#   url             = data.aws_eks_cluster.cluster.identity[0].oidc[0].issuer
 
-  lifecycle {
-    ignore_changes = [thumbprint_list]
-  }
-}
+#   lifecycle {
+#     ignore_changes = [thumbprint_list]
+#   }
+# }
 
 resource "aws_iam_role" "eks_node_group_role" {
   name                  = "${var.name}-eks-node-group-role"
