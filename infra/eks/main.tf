@@ -141,7 +141,8 @@ resource "aws_eks_cluster" "main" {
 # Fetch OIDC provider thumbprint for root CA
 data "external" "thumbprint" { 
   # program =    ["/bin/bash","${path.module}/oidc_thumbprint.sh", var.region]
-  program =    ["sh","${path.root}/eks/oidc_thumbprint.sh", var.region]
+  # program =    ["sh","${path.root}/eks/oidc_thumbprint.sh", var.region]
+  program =    ["sh","${path.module}/oidc_thumbprint.sh", var.region]
   # program =    ["${abspath(path.module)}/oidc_thumbprint.sh", var.region]
   # program =    ["./eks/oidc_thumbprint.sh", var.region]
   # program =    ["oidc_thumbprint.sh", var.region]
