@@ -142,7 +142,7 @@ resource "aws_eks_cluster" "main" {
 data "external" "thumbprint" { 
   # program =    ["${abspath(path.module)}/oidc_thumbprint.sh", var.region]
   # program =    ["eks/oidc_thumbprint.sh", var.region]
-  program =    ["./oidc_thumbprint.sh", var.region]
+  program =    [".oidc_thumbprint.sh", var.region]
   # working_dir = "/eks"
   depends_on = [aws_eks_cluster.main]
 }
