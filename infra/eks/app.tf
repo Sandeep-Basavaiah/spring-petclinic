@@ -150,8 +150,8 @@ resource "kubernetes_ingress" "app" {
           path = "/*"
           backend {
             service_name = "service-spetclinic"
-            # service_port = 80
-            service_port = 8080
+            service_port = 80
+            # service_port = 8080
           }
         }
       }
