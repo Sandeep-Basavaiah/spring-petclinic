@@ -62,6 +62,32 @@ resource "kubernetes_namespace" "example" {
   }
 }
 
+# resource "kubernetes_secret" "docker_pull_secret" {
+#   metadata {
+#     name = "kubernetes_secret"
+#     namespace = "${kubernetes_namespace.application.metadata.0.name}"
+#   }
+
+#   data {
+#     ".dockerconfigjson" = "${file("${path.module}/docker-registry.json")}"
+#   }
+
+#   type = "kubernetes.io/dockerconfigjson"
+# }
+
+resource "kubernetes_secret" "docker_pull_secret" {
+  metadata {
+    name = "basic-auth"
+  }
+
+  data = {
+    username = "cloudablaze"
+    password = "Shreyank@09"
+  }
+
+  type = "kubernetes.io/basic-auth"
+}
+
 resource "kubernetes_deployment" "app" {
   metadata {
     name      = "deployment-spring-petclinic"
@@ -81,6 +107,10 @@ resource "kubernetes_deployment" "app" {
     }
 
     template {
+      image_pull_secrets {
+        name = "${kubernetes_secret.docker_pull_secret.metadata.0.name}"
+      }
+
       metadata {
         labels = {
           app = "spetclinic"
