@@ -146,7 +146,7 @@ resource "kubernetes_service" "app" {
     port {
       # port        = 80
       # target_port = 80
-      port        = 8080
+      port        = 80
       target_port = 8080
       protocol    = "TCP"
     }
@@ -179,8 +179,8 @@ resource "kubernetes_ingress" "app" {
           path = "/*"
           backend {
             service_name = "service-spetclinic"
-            # service_port = 80
-            service_port = 8080
+            service_port = 80
+            # service_port = 8080
           }
         }
       }
