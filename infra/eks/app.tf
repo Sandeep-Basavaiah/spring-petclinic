@@ -69,12 +69,12 @@ resource "kubernetes_secret" "docker_pull_secret" {
   }
 
   data {
-    # ".dockerconfigjson" = "${file("${path.module}/docker-registry.json")}"
-    ".dockercfg" = "${file("${path.module}/docker-registry.json")}"
+    ".dockerconfigjson" = "${file("${path.module}/docker-registry.json")}"
+    # ".dockercfg" = "${file("${path.module}/docker-registry.json")}"
   }
 
-  # type = "kubernetes.io/dockerconfigjson"
-  type = "kubernetes.io/dockercfg"
+  type = "kubernetes.io/dockerconfigjson"
+  # type = "kubernetes.io/dockercfg"
 }
 
 # resource "kubernetes_secret" "docker_pull_secret" {
