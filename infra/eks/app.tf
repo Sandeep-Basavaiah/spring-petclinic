@@ -62,31 +62,33 @@ resource "kubernetes_namespace" "example" {
   }
 }
 
-# resource "kubernetes_secret" "docker_pull_secret" {
-#   metadata {
-#     name = "kubernetes_secret"
-#     namespace = "${kubernetes_namespace.application.metadata.0.name}"
-#   }
-
-#   data {
-#     ".dockerconfigjson" = "${file("${path.module}/docker-registry.json")}"
-#   }
-
-#   type = "kubernetes.io/dockerconfigjson"
-# }
-
 resource "kubernetes_secret" "docker_pull_secret" {
   metadata {
-    name = "basic-auth"
+    name = "kubernetes_secret"
+    namespace = "${kubernetes_namespace.example.metadata.0.name}"
   }
 
-  data = {
-    username = "cloudablaze"
-    password = "Shreyank@09"
+  data {
+    # ".dockerconfigjson" = "${file("${path.module}/docker-registry.json")}"
+    ".dockercfg" = "${file("${path.module}/docker-registry.json")}"
   }
 
-  type = "kubernetes.io/basic-auth"
+  # type = "kubernetes.io/dockerconfigjson"
+  type = "kubernetes.io/dockercfg"
 }
+
+# resource "kubernetes_secret" "docker_pull_secret" {
+#   metadata {
+#     name = "basic-auth"
+#   }
+
+#   data = {
+#     username = "cloudablaze"
+#     password = "Shreyank@09"
+#   }
+
+#   type = "kubernetes.io/basic-auth"
+# }
 
 resource "kubernetes_deployment" "app" {
   metadata {
@@ -119,7 +121,7 @@ resource "kubernetes_deployment" "app" {
         }
         container {
           # image = "alexwhen/docker-2048"
-          image = "cloudablaze/spring-petclinic"
+          image = "registry.gitlab.com/cloudablaze/spring-petclinic"
           name  = "spetclinic"
 
           port {
