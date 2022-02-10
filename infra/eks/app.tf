@@ -83,8 +83,8 @@ resource "kubernetes_secret" "docker_pull_secret" {
   }
 
   data = {
-    username = "cloudablaze"
-    password = "Shreyank@09"
+    username = ""
+    password = ""
   }
 
   type = "kubernetes.io/basic-auth"
@@ -116,9 +116,9 @@ resource "kubernetes_deployment" "app" {
       }
 
       spec {
-        image_pull_secrets {
-          name = "${kubernetes_secret.docker_pull_secret.metadata.0.name}"
-        }
+        # image_pull_secrets {
+        #   name = "${kubernetes_secret.docker_pull_secret.metadata.0.name}"
+        # }
         container {
           # image = "alexwhen/docker-2048"
           image = "cloudablaze/spring-petclinic"
